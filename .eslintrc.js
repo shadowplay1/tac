@@ -20,10 +20,6 @@ module.exports = {
         'eslint:recommended',
     ],
 
-    plugins: [
-        '@typescript-eslint'
-    ],
-
     env: {
         es6: true,
         node: true,
