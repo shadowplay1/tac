@@ -1,4 +1,4 @@
-//                  THIS WAS MADE BY:            
+//                  THIS WAS MADE BY:
 //                       DONALD D.
 //                  Discord: donaldd1
 //                Github: theautiscoder
@@ -24,47 +24,47 @@ module.exports = {
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
         .addStringOption(option =>
             option
-            .setName('item-name')
-            .setDescription('The name of the item you are adding')
-            .setRequired(true)
+                .setName('item-name')
+                .setDescription('The name of the item you are adding')
+                .setRequired(true)
         )
         .addNumberOption(option =>
             option
-            .setName('price')
-            .setDescription('How much is this item going to cost')
-            .setRequired(true)
+                .setName('price')
+                .setDescription('How much is this item going to cost')
+                .setRequired(true)
         )
         .addStringOption(option =>
             option
-            .setName('description')
-            .setDescription('What is this item?')
-            .setRequired(true)
+                .setName('description')
+                .setDescription('What is this item?')
+                .setRequired(true)
         )
         .addNumberOption(option =>
             option
-            .setName('limit')
-            .setDescription('How many of this item can one person have')
-            .setRequired(false)
+                .setName('limit')
+                .setDescription('How many of this item can one person have')
+                .setRequired(false)
         )
         .addStringOption(option =>
             option
-            .setName('message')
-            .setDescription('The message that is stated when someone uses the item')
-            .setRequired(false)
+                .setName('message')
+                .setDescription('The message that is stated when someone uses the item')
+                .setRequired(false)
         )
         .addRoleOption(option =>
             option
-            .setName('role')
-            .setDescription('What role do you want added to them?')
-            .setRequired(false)
+                .setName('role')
+                .setDescription('What role do you want added to them?')
+                .setRequired(false)
         ),
     /**
-     * 
-     * @param {ChatInputCommandInteraction} interaction 
-     * @param {Client} client 
+     *
+     * @param {ChatInputCommandInteraction} interaction
+     * @param {Client} client
      */
     async execute(interaction, client) {
-        const embed = new EmbedBuilder()
+        const embed = new EmbedBuilder();
         const { guild, member } = interaction;
 
         const item = interaction.options.getString('item-name');
@@ -81,24 +81,24 @@ module.exports = {
                         name: item,
                         price: price,
                         description: description,
-                    })
+                    });
 
                     return interaction.reply({
                         content: 'Item was added to the shop successfully',
                         ephemeral: true
-                    })
+                    });
                 }
                 eco.shop.addItem(guild.id, {
                     name: item,
                     price: price,
                     description: description,
                     maxAmount: limit
-                })
+                });
 
                 return interaction.reply({
                     content: 'Item was added to the shop successfully',
                     ephemeral: true
-                })
+                });
             }
 
             if (!limit) {
@@ -106,12 +106,12 @@ module.exports = {
                     name: item,
                     price: price,
                     description: description,
-                })
+                });
 
                 return interaction.reply({
                     content: 'Item was added to the shop successfully',
                     ephemeral: true
-                })
+                });
             }
 
             eco.shop.addItem(guild.id, {
@@ -120,12 +120,12 @@ module.exports = {
                 description: description,
                 maxAmount: limit,
                 role: role
-            })
+            });
 
             return interaction.reply({
                 content: 'Item was added to the shop successfully',
                 ephemeral: true
-            })
+            });
         }
 
         if (!role) {
@@ -135,12 +135,12 @@ module.exports = {
                         name: item,
                         price: price,
                         description: description,
-                    })
+                    });
 
                     return interaction.reply({
                         content: 'Item was added to the shop successfully',
                         ephemeral: true
-                    })
+                    });
                 }
 
                 eco.shop.addItem(guild.id, {
@@ -148,12 +148,12 @@ module.exports = {
                     price: price,
                     description: description,
                     maxAmount: limit
-                })
+                });
 
                 return interaction.reply({
                     content: 'Item was added to the shop successfully',
                     ephemeral: true
-                })
+                });
             }
 
             eco.shop.addItem(guild.id, {
@@ -162,12 +162,12 @@ module.exports = {
                 description: description,
                 maxAmount: limit,
                 message: message
-            })
+            });
 
             return interaction.reply({
                 content: 'Item was added to the shop successfully',
                 ephemeral: true
-            })
+            });
         }
 
         if (!limit) {
@@ -177,12 +177,12 @@ module.exports = {
                         name: item,
                         price: price,
                         description: description,
-                    })
+                    });
 
                     return interaction.reply({
                         content: 'Item was added to the shop successfully',
                         ephemeral: true
-                    })
+                    });
                 }
 
                 eco.shop.addItem(guild.id, {
@@ -190,12 +190,12 @@ module.exports = {
                     price: price,
                     description: description,
                     message: message
-                })
+                });
 
                 return interaction.reply({
                     content: 'Item was added to the shop successfully',
                     ephemeral: true
-                })
+                });
             }
 
             eco.shop.addItem(guild.id, {
@@ -203,12 +203,12 @@ module.exports = {
                 price: price,
                 description: description,
                 role: role
-            })
+            });
 
             return interaction.reply({
                 content: 'Item was added to the shop successfully',
                 ephemeral: true
-            })
+            });
         }
 
         eco.shop.addItem(guild.id, {
@@ -218,11 +218,11 @@ module.exports = {
             maxAmount: limit,
             message: message,
             role: role,
-        })
+        });
 
         interaction.reply({
             content: 'Item was added to the shop successfully',
             ephemeral: true
-        })
+        });
     }
-}
+};

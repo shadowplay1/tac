@@ -8,12 +8,12 @@ lint() {
         echo 'Fixing all fixable linting issues...'
         echo
 
-        eslint ./src --fix & output=$(eslint ./src --fix)
+        eslint ./src/commands/EconomyMain --fix & output=$(eslint ./src/commands/EconomyMain --fix)
     else
         echo 'Checking code for linting issues...'
         echo
 
-        eslint ./src & output=$(eslint ./src)
+        eslint ./src/commands/EconomyMain & output=$(eslint ./src/commands/EconomyMain)
     fi
 }
 

@@ -1,4 +1,4 @@
-//                  THIS WAS MADE BY:            
+//                  THIS WAS MADE BY:
 //                       DONALD D.
 //                  Discord: donaldd1
 //                Github: theautiscoder
@@ -6,8 +6,8 @@
 //                DO NOT EDIT ANYTHING BELLOW UNLESS
 //                   YOU KNOW WHAT YOURE DOING
 
-const { ChatInputCommandInteraction, SlashCommandBuilder, EmbedBuilder, Client, WebhookClient } = require('discord.js');
-const eco = require('../../Database/EcoDB')
+const { SlashCommandBuilder, EmbedBuilder } = require('discord.js');
+const eco = require('../../Database/EcoDB');
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -15,42 +15,42 @@ module.exports = {
         .setDescription('Send someone money')
         .addUserOption(option =>
             option
-            .setName('user')
-            .setDescription('Who are you sending money to')
-            .setRequired(true)
+                .setName('user')
+                .setDescription('Who are you sending money to')
+                .setRequired(true)
         )
         .addNumberOption(option =>
             option
-            .setName('amount')
-            .setDescription('How much are you sending them')
-            .setRequired(true)
+                .setName('amount')
+                .setDescription('How much are you sending them')
+                .setRequired(true)
         ),
+
     /**
-     * 
-     * @param {ChatInputCommandInteraction} interaction 
-     * @param {Client} client 
+     * @param {ChatInputCommandInteraction} interaction
      */
-    async execute(interaction, client) {
-        const embed = new EmbedBuilder()
+    async execute(interaction) {
+        const embed = new EmbedBuilder();
         const { guild, member } = interaction;
-        const Target = interaction.options.getMember('user');
-        const Amount = interaction.options.getNumber('amount');
+
+        const target = interaction.options.getMember('user');
+        const amount = interaction.options.getNumber('amount');
 
         const senderbalance = eco.balance.get(member.id, guild.id);
 
-        if (senderbalance > Amount) return interaction.reply({
-            content: `You are attempting to send them more coins than you have`,
+        if (senderbalance > amount) return interaction.reply({
+            content: 'You are attempting to send them more coins than you have',
             ephemeral: true
-        })
+        });
 
-        eco.balance.subtract(Amount, member.id, guild.id);
-        eco.balance.add(Amount, Target.id, guild.id);
+        eco.balance.subtract(amount, member.id, guild.id);
+        eco.balance.add(amount, target.id, guild.id);
 
         embed
             .setTimestamp()
             .setTitle('**Coins Transfer...**')
-            .setDescription(`You have successfully sent ${Amount} coins to ${Target}`)
-        interaction.reply({ embeds: [embed] })
+            .setDescription(`You have successfully sent ${amount} coins to ${target}`);
+        interaction.reply({ embeds: [embed] });
 
     }
-}
+};
