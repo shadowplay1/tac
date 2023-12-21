@@ -6,15 +6,7 @@
 //                DO NOT EDIT ANYTHING BELLOW UNLESS
 //                   YOU KNOW WHAT YOURE DOING
 
-const {
-    ChatInputCommandInteraction,
-    SlashCommandBuilder,
-    EmbedBuilder,
-    Client,
-    PermissionFlagsBits,
-    WebhookClient,
-} = require('discord.js');
-
+const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 const eco = require('../../Database/EcoDB');
 
 module.exports = {
@@ -47,24 +39,23 @@ module.exports = {
                 })
                 .setRequired(true)
         ),
+
     /**
-     *
      * @param {ChatInputCommandInteraction} interaction
-     * @param {Client} client
      */
-    async execute(interaction, client) {
-        const { guild, member } = interaction;
+    async execute(interaction) {
+        const { guild } = interaction;
         const embed = new EmbedBuilder();
 
-        const Target = interaction.options.getMember('target');
+        const target = interaction.options.getMember('target');
         const amount = interaction.options.getNumber('amount');
 
         if (interaction.options.getString('type') === 'Coins') {
-            eco.balance.add(amount, Target.id, guild.id);
+            eco.balance.add(amount, target.id, guild.id);
 
             embed
                 .setTitle('Coins successfully added')
-                .setDescription(`I have successfully added ${amount} coins to ${Target}'s balance!`)
+                .setDescription(`I have successfully added ${amount} coins to ${target}'s balance!`)
                 .setColor('Green')
                 .setTimestamp();
 
@@ -72,11 +63,11 @@ module.exports = {
         }
 
         if (interaction.options.getString('type') === 'Bank') {
-            eco.bank.add(amount, Target.id, guild.id);
+            eco.bank.add(amount, target.id, guild.id);
 
             embed
                 .setTitle('Coins successfully added')
-                .setDescription(`I have successfully added ${amount} coins to ${Target}'s Bank Account!`)
+                .setDescription(`I have successfully added ${amount} coins to ${target}'s Bank Account!`)
                 .setColor('Green')
                 .setTimestamp();
 

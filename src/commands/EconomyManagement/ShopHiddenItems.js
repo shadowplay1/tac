@@ -6,15 +6,7 @@
 //                DO NOT EDIT ANYTHING BELLOW UNLESS
 //                   YOU KNOW WHAT YOURE DOING
 
-const {
-    ChatInputCommandInteraction,
-    SlashCommandBuilder,
-    EmbedBuilder,
-    Client,
-    PermissionFlagsBits,
-    WebhookClient,
-} = require('discord.js');
-
+const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 const eco = require('../../Database/EcoDB');
 
 module.exports = {
@@ -22,24 +14,23 @@ module.exports = {
         .setName('shop-hidden-items')
         .setDescription('See what is hid in the shop')
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+
     /**
-         *
-         * @param {ChatInputCommandInteraction} interaction
-         * @param {Client} client
-         */
-    async execute(interaction, client) {
+     * @param {ChatInputCommandInteraction} interaction
+     */
+    async execute(interaction) {
         const embed = new EmbedBuilder();
-        const { guild, member } = interaction;
+        const { guild } = interaction;
 
-        const HiddenItems = eco.shop.filter(item => item.custom.hidden);
+        const hiddenShop = eco.shop.filter(item => item.custom.hidden);
 
-        if (!HiddenItems.length) return interaction.reply({
+        if (!hiddenShop.length) return interaction.reply({
             content: 'There is nothing hidden in the shop',
             ephemeral: true
         });
 
         embed
-            .setTitle(`**${guild.name}'s Hidden Shop Items... (${HiddenItems.length} hidden items)**`)
+            .setTitle(`**${guild.name}'s Hidden Shop Items... (${hiddenShop.length} hidden items)**`)
             .setDescription(`${hiddenShop
                 .map((item, index) =>
                     `${index + 1} - ${item.custom.hidden ? ' 🔒 | ' : ' '}${item.custom.emoji} ` +

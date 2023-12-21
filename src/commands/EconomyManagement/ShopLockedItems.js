@@ -6,15 +6,7 @@
 //                DO NOT EDIT ANYTHING BELLOW UNLESS
 //                   YOU KNOW WHAT YOURE DOING
 
-const {
-    ChatInputCommandInteraction,
-    SlashCommandBuilder,
-    EmbedBuilder,
-    Client,
-    PermissionFlagsBits,
-    WebhookClient,
-} = require('discord.js');
-
+const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 const eco = require('../../Database/EcoDB');
 
 module.exports = {
@@ -22,25 +14,24 @@ module.exports = {
         .setName('shop-locked-items')
         .setDescription('See what is locked in the shop')
         .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+
     /**
-         *
-         * @param {ChatInputCommandInteraction} interaction
-         * @param {Client} client
-         */
-    async execute(interaction, client) {
+      * @param {ChatInputCommandInteraction} interaction
+      */
+    async execute(interaction) {
         const embed = new EmbedBuilder();
-        const { guild, member } = interaction;
+        const { guild } = interaction;
 
-        const LockedItems = eco.shop.filter(item => item.custom.hidden);
+        const lockedShop = eco.shop.filter(item => item.custom.hidden);
 
-        if (!LockedItems.length) return interaction.reply({
+        if (!lockedShop.length) return interaction.reply({
             content: 'There is nothing locked in the shop',
             ephemeral: true
         });
 
         embed
-            .setTitle(`**${guild.name}'s Hidden Shop Items... (${LockedItems.length} locked items)**`)
-            .setDescription(`${hiddenShop
+            .setTitle(`**${guild.name}'s Locked Shop Items... (${lockedShop.length} locked items)**`)
+		    .setDescription(`${lockedShop
                 .map((item, index) =>
                     `${index + 1} - ${item.custom.locked ? ' 🔒 | ' : ' '}${item.custom.emoji} ` +
                         `**${item.name}** (ID: **${item.id}**) - **${item.price}** coins ` +

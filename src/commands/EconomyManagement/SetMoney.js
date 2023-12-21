@@ -6,15 +6,7 @@
 //                DO NOT EDIT ANYTHING BELLOW UNLESS
 //                   YOU KNOW WHAT YOURE DOING
 
-const {
-    ChatInputCommandInteraction,
-    SlashCommandBuilder,
-    EmbedBuilder,
-    Client,
-    PermissionFlagsBits,
-    WebhookClient,
-} = require('discord.js');
-
+const { SlashCommandBuilder, EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 const eco = require('../../Database/EcoDB');
 
 module.exports = {
@@ -46,24 +38,23 @@ module.exports = {
                 })
                 .setRequired(true)
         ),
+
     /**
-     *
      * @param {ChatInputCommandInteraction} interaction
-     * @param {Client} client
      */
-    async execute(interaction, client) {
-        const { guild, member } = interaction;
+    async execute(interaction) {
+        const { guild } = interaction;
         const embed = new EmbedBuilder();
 
-        const Target = interaction.options.getMember('target');
+        const target = interaction.options.getMember('target');
         const amount = interaction.options.getNumber('amount');
 
         if (interaction.options.getString('type') === 'Coins') {
-            eco.balance.set(amount, Target.id, guild.id);
+            eco.balance.set(amount, target.id, guild.id);
 
             embed
                 .setTitle('Coins successfully set')
-                .setDescription(`I have successfully set ${Target}'s coins to ${amount}`)
+                .setDescription(`I have successfully set ${target}'s coins to ${amount}`)
                 .setColor('Green')
                 .setTimestamp();
 
@@ -71,11 +62,11 @@ module.exports = {
         }
 
         if (interaction.options.getString('type') === 'Bank') {
-            eco.bank.set(amount, Target.id, guild.id);
+            eco.bank.set(amount, target.id, guild.id);
 
             embed
                 .setTitle('Bank Value successfully set')
-                .setDescription(`I have successfully set ${Target}'s bank value to ${amount}`)
+                .setDescription(`I have successfully set ${target}'s bank value to ${amount}`)
                 .setColor('Green')
                 .setTimestamp();
 

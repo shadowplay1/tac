@@ -6,15 +6,7 @@
 //                DO NOT EDIT ANYTHING BELLOW UNLESS
 //                   YOU KNOW WHAT YOURE DOING
 
-const {
-    ChatInputCommandInteraction,
-    SlashCommandBuilder,
-    EmbedBuilder,
-    Client,
-    PermissionFlagsBits,
-    WebhookClient,
-} = require('discord.js');
-
+const { SlashCommandBuilder, PermissionFlagsBits } = require('discord.js');
 const eco = require('../../Database/EcoDB');
 
 module.exports = {
@@ -58,20 +50,20 @@ module.exports = {
                 .setDescription('What role do you want added to them?')
                 .setRequired(false)
         ),
+
     /**
-     *
      * @param {ChatInputCommandInteraction} interaction
-     * @param {Client} client
      */
-    async execute(interaction, client) {
-        const embed = new EmbedBuilder();
-        const { guild, member } = interaction;
+    async execute(interaction) {
+        const { guild } = interaction;
 
         const item = interaction.options.getString('item-name');
         const price = interaction.options.getNumber('price');
+
         const description = interaction.options.getString('description');
-        const limit = interaction.options.getNumber('limit');
         const message = interaction.options.getString('message');
+
+        const limit = interaction.options.getNumber('limit');
         const role = interaction.options.getRole('role');
 
         if (!message) {

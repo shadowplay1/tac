@@ -26,32 +26,32 @@ module.exports = {
     async execute(interaction) {
         const { guild, member } = interaction;
 
-        const item1 = interaction.options.getString('item-name');
-        const item2 = eco.shop.finditem(item1, guild.id);
+        const itemName = interaction.options.getString('item-name');
+        const shopItem = eco.shop.finditem(itemName, guild.id);
 
-	    if (!item2) {
+	    if (!shopItem) {
 		    return interaction.reply({
-			    content: `Could not find item name or ID: ${item1}`,
+			    content: `Could not find item name or ID: ${itemName}`,
 			    ephemeral: true
 		    });
 	    }
 
         const userBalance = eco.balance.fetch(member.id, guild.id);
 
-        if (item2.price > userBalance) {
+        if (shopItem.price > userBalance) {
             return interaction.reply({
                 content: 'You are not able to afford this',
                 ephemeral: true
             });
         }
 
-	    if (member.roles.cache.has(item2.role)) {
+	    if (member.roles.cache.has(shopItem.role)) {
 		    return interaction.reply({
 			    content: 'You cannot buy this item, you already have the role that comes with it'
 		    });
 	    }
 
-        const purchase = eco.shop.buy(item1, member.id, guild.id);
+        const purchase = eco.shop.buy(itemName, member.id, guild.id);
 
 	    if (purchase.quantity === 'max') {
 		    return interaction.reply({
@@ -60,10 +60,10 @@ module.exports = {
 		    });
 	    }
 
-        if (item2.role) guild.members.cache.get(member.id).roles.add(guild.roles.cache.get(item2.role));
+        if (shopItem.role) guild.members.cache.get(member.id).roles.add(guild.roles.cache.get(shopItem.role));
 
         interaction.reply({
-            content: `You have purchased the following item: ${item2.name} for ${item2.price} coins!`,
+            content: `You have purchased the following item: ${shopItem.name} for ${shopItem.price} coins!`,
             ephemeral: true
         });
     }
