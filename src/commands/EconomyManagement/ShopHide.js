@@ -30,15 +30,19 @@ module.exports = {
         const item = interaction.options.getString('item-name');
         const shopItem = eco.shop.findItem(item, guild.id);
 
-        if (!shopItem) return interaction.reply({
-            content: 'I cannot find this item in the shop',
-            ephemeral: true
-        });
+        if (!shopItem) {
+		    return interaction.reply({
+                	content: 'I cannot find this item in the shop',
+                	ephemeral: true
+		    });
+        }
 
-        if (shopItem.custom.hidden) return interaction.reply({
-            content: 'This item is already hidden',
-            ephemeral: true
-        });
+        if (shopItem.custom.hidden) {
+		    return interaction.reply({
+                	content: 'This item is already hidden',
+                	ephemeral: true
+		    });
+        }
 
         shopItem.setCustom({
             hidden: true,

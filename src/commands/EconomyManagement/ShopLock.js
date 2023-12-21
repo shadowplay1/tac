@@ -30,15 +30,19 @@ module.exports = {
         const item = interaction.options.getString('item-name');
         const shopItem = eco.shop.findItem(item, guild.id);
 
-        if (!shopItem) return interaction.reply({
-            content: 'I cannot find this item in the shop',
-            ephemeral: true
-        });
+        if (!shopItem) {
+		    return interaction.reply({
+                	content: 'I cannot find this item in the shop',
+                	ephemeral: true
+		    });
+        }
 
-        if (shopItem.custom.locked) return interaction.reply({
-            content: 'This item is already locked',
-            ephemeral: true
-        });
+        if (shopItem.custom.locked) {
+		    return interaction.reply({
+                	content: 'This item is already locked',
+                	ephemeral: true
+		    });
+        }
 
         shopItem.setCustom({
             locked: true,

@@ -24,10 +24,12 @@ module.exports = {
 
         const hiddenShop = eco.shop.filter(item => item.custom.hidden);
 
-        if (!hiddenShop.length) return interaction.reply({
-            content: 'There is nothing hidden in the shop',
-            ephemeral: true
-        });
+        if (!hiddenShop.length) {
+		    return interaction.reply({
+                	content: 'There is nothing hidden in the shop',
+                	ephemeral: true
+		    });
+        }
 
         embed
             .setTitle(`**${guild.name}'s Hidden Shop Items... (${hiddenShop.length} hidden items)**`)

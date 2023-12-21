@@ -24,10 +24,12 @@ module.exports = {
 
         const lockedShop = eco.shop.filter(item => item.custom.hidden);
 
-        if (!lockedShop.length) return interaction.reply({
-            content: 'There is nothing locked in the shop',
-            ephemeral: true
-        });
+        if (!lockedShop.length) {
+		    return interaction.reply({
+                	content: 'There is nothing locked in the shop',
+                	ephemeral: true
+		    });
+        }
 
         embed
             .setTitle(`**${guild.name}'s Locked Shop Items... (${lockedShop.length} locked items)**`)
